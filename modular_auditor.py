@@ -1,14 +1,14 @@
 #Variables
 stock_quantity = 0 # Initialize stock to zero
+failed_entries = 0 # Counter for failed entries
 
 # Retrieve and validate input
 def get_valid_input():
-    failed_entries = 0 # Counter for failed entries
+    failed_attempts = 0
     while True:
         stock_input = input("Please enter stock quantity: ") 
         if stock_input.lower() == "quit":
-            failed_entries += 1
-            return "quit", failed_entries
+            return "quit", failed_attempts
         
       # Integer check
         try:
@@ -16,17 +16,17 @@ def get_valid_input():
             stock_input = int(stock_input)
         except ValueError:
              print("\nError: Please enter a valid integer!")
-             failed_entries += 1    
+             failed_attempts += 1    
              continue  
     
             # Negative value check
         if stock_input < 0:
             print("\nError: Please enter a positive integer!")
             # stock_quantity -= stock_input
-            failed_entries += 1
+            failed_attempts += 1
             continue
 
-        return stock_input, failed_entries
+        return stock_input, failed_attempts
     
 # Process delivery
 def process_delivery(current_total, new_value):
@@ -46,7 +46,9 @@ def generate_reports(total_units, failed_attempts):
 
 # Stock Validation
 while stock_quantity < 500:
-    stock_input, failed_entries = get_valid_input()
+    stock_input, new_failures = get_valid_input()
+
+    failed_entries += new_failures
 
     # User exits program check
     if stock_input == "quit":
