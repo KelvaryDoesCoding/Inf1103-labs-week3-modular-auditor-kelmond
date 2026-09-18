@@ -7,6 +7,7 @@ def get_valid_input():
     while True:
         stock_input = input("Please enter stock quantity: ") 
         if stock_input.lower() == "quit":
+            failed_entries += 1
             return "quit", failed_entries
         
       # Integer check
